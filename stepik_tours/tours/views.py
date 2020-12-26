@@ -1,7 +1,8 @@
 from django.shortcuts import render
 # from django.http import HttpResponseNotFound, HttpResponseServerError
 from django.views import View
-
+from random import randint
+from . import data
 # def custom_handler404(request, exception):
 #     return HttpResponseNotFound("Нет такой страницы")
 
@@ -9,35 +10,68 @@ from django.views import View
 # def custom_handler500(request):
 #      return HttpResponseServerError("Ошибка на сервере")
 
-
 class MainView(View):
 
     def get(self, request):
 
-        count = range(6)
-        ii = "iterator"
+        rand_tours = {}
+        for x in range(6):
+            rand_tours[x] = (data.tours[randint(1, 16)])
         context = {
-            'count': count,
-            'ii': ii,
+            'tours': rand_tours
         }
         return render(request, 'list_tours.html', context=context)
 
 
-dep_data = {
-    'Novosibirsk': "departure.html",
-}
+class DepartureView(View):
+
+    def get(self, request, departure):
+
+        n = 0
+        tours_dep = {}
+        country = data.departures[departure].split()
+        end_of_word = ''
+        price = []
+        night = []
+
+        for i, j in data.tours.items():
+            if j["departure"] == departure:
+                tours_dep[n] = j
+                price.append(j["price"])
+                night.append(j["nights"])
+                n += 1
+
+        price.sort()
+        night.sort()
+
+        if n != 1 and n >= 2 or n <= 4:
+            end_of_word = 'а'
+        else:
+            end_of_word = 'ов'
+
+        context = {
+            'tours_dep': tours_dep,
+            'n': n,
+            'country': country[1],
+            'end_of_word': end_of_word,
+            'min_price': price[0],
+            'max_price': price[-1],
+            'min_night': night[0],
+            'max_night': night[-1]
+        }
+        return render(request, 'departure.html', context=context)
 
 
-def DepartureView(request, departure):
-    dep_res = dep_data.get(departure)
-    return render(request, dep_res)
+class TourView(View):
 
+    def get(self, request, id):
 
-# tour_data = {
-#     1: "tour.html", 2: "tour.html"
-# }
+        tour = data.tours.get(id)
+        print(tour['title'])
+        star = '★' * int(tour["stars"])
+        context = {
+            'tour': tour,
+            'star': star,
 
-
-def TourView(request, id):
-    # tour = tour_data.get(id)
-    return render(request, 'tour.html')
+        }
+        return render(request, 'tour.html', context=context)
