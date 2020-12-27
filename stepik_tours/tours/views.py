@@ -15,12 +15,17 @@ class MainView(View):
     def get(self, request):
 
         rand_tours = {}
+        num_tours = {}
         for x in range(6):
-            rand_tours[x] = (data.tours[randint(1, 16)])
+            num_tours[x + 1] = randint(1, 16)
+            rand_tours[x + 1] = (data.tours[num_tours[x + 1]])
+
         context = {
-            'tours': rand_tours
+            'tours': rand_tours,
+            'num_tours': num_tours,
         }
-        return render(request, 'list_tours.html', context=context)
+
+        return render(request, 'index.html', context=context)
 
 
 class DepartureView(View):

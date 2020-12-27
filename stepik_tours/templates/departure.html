@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
 {% block content %}
   <main class="container mt-3">
     <h1 class="display-5 mt-4">Летим из {{ country }}</h1>
@@ -8,7 +8,7 @@
       {% for i, j in tours_dep.items %}
       <div class="col-4">
         <div class="card mb-4">
-          <img src="{{ j.picture }}" class="card-img-top img-fluid" alt="">
+          <img src="{{ j.picture }}" class="img-fluid p-6" alt="">
           <div class="card-body">
             <h2 class="h5 card-title">{{ j.title }}</h2>
             <p class="card-text">{{ j.description }}</p>

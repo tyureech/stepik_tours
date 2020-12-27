@@ -1,5 +1,3 @@
-from random import randint
-
 title = "Stepik Travel"
 subtitle = "Для тех, кого отвлекают дома"
 description = """Лучшие направления, где никто не будет вам мешать сидеть на берегу и изучать программирование, 
