@@ -16,7 +16,7 @@
             <div class="card-body">
                 <h2 class="h5 card-title">{{ j.title }}</h2>
                 <p class="card-text">{{ j.description }}</p>
-                <a href="http://127.0.0.1:8000/tour/{{ num_tours.i }}/" class="btn btn-sm btn-primary">Подробнее</a>
+                <a href="{% url 'tour' i %}" class="btn btn-sm btn-primary">Подробнее</a>
             </div>
         </div>
     </div>
